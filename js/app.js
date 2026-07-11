@@ -82,7 +82,11 @@ document.querySelectorAll("#mobileMenu a").forEach(link=>{
 
 link.addEventListener("click",()=>{
 
+setTimeout(()=>{
+
 mobileMenu.classList.remove("active");
+
+},150);
 
 });
 
