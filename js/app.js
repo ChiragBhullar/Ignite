@@ -80,11 +80,11 @@ mobileMenu.classList.remove("active");
 
 document.querySelectorAll("#mobileMenu a").forEach(link=>{
 
-link.onclick=()=>{
+link.addEventListener("click",()=>{
 
 mobileMenu.classList.remove("active");
 
-};
+});
 
 });
 
