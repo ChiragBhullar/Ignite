@@ -704,22 +704,38 @@ MOBILE MENU
 ======================================*/
 
 #mobileMenu{
+
 position:fixed;
+
 top:0;
-right:-100%;
+right:0;
+
 width:300px;
 height:100vh;
-background:#070707;
+
+background:rgba(7,7,7,.96);
+
 padding:90px 30px;
+
 display:flex;
 flex-direction:column;
+
 gap:24px;
-transition:.4s;
-z-index:2000;
+
+transform:translateX(100%);
+
+transition:transform .35s ease;
+
+will-change:transform;
+
+z-index:9999;
+
 }
 
 #mobileMenu.active{
-right:0;
+
+transform:translateX(0);
+
 }
 
 #mobileMenu a{
@@ -1064,6 +1080,8 @@ opacity:1;
 }
 
 @media(max-width:768px){
+
+
 
 .hero-image{
 
@@ -3067,7 +3085,19 @@ font-size:.95rem;
 
 .hero-buttons{
 
+display:flex;
+
 flex-direction:column;
+
+gap:14px;
+
+}
+
+.hero-buttons a{
+
+width:100%;
+
+justify-content:center;
 
 }
 
@@ -3635,5 +3665,19 @@ drop-shadow(0 0 28px rgba(255,0,110,.65))
 drop-shadow(0 0 55px rgba(247,183,49,.35));
 
 }
+
+}
+
+.mobile-menu{
+
+transform:translateX(-100%);
+
+transition:transform .35s ease;
+
+}
+
+.mobile-menu.active{
+
+transform:translateX(0);
 
 }
