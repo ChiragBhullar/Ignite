@@ -80,15 +80,11 @@ mobileMenu.classList.remove("active");
 
 document.querySelectorAll("#mobileMenu a").forEach(link=>{
 
-link.addEventListener("click",()=>{
-
-setTimeout(()=>{
+link.onclick=()=>{
 
 mobileMenu.classList.remove("active");
 
-},150);
-
-});
+};
 
 });
 
@@ -132,7 +128,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
 
 anchor.addEventListener("click",function(e){
 
-const target=document.querySelector(this.getAttribute("href"));
+const href=this.getAttribute("href");
+
+if(href==="#" || href.length<=1) return;
+
+const target=document.querySelector(href);
 
 if(target){
 
@@ -140,7 +140,9 @@ e.preventDefault();
 
 target.scrollIntoView({
 
-behavior:"smooth"
+behavior:"smooth",
+
+block:"start"
 
 });
 
