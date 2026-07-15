@@ -9,7 +9,7 @@ Leave it as null while the date
 is secret.
 */
 
-const EVENT_DATE = "2026-08-08T15:30:00";
+const EVENT_DATE = "2026-08-08T14:00:00";
 
 // Example:
 //
