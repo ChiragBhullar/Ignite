@@ -2,41 +2,52 @@
 PREMIUM LOADER
 =========================================*/
 
-const loader=document.getElementById("loader");
-const progress=document.getElementById("progressBar");
-const value=document.getElementById("progressValue");
+const loader = document.getElementById("loader");
+const progress = document.getElementById("progressBar");
+const value = document.getElementById("progressValue");
 
-let percent=0;
+let percent = 0;
 
-const loading=setInterval(()=>{
+// Animate the progress bar
+const loading = setInterval(() => {
 
-percent++;
+    // Slow down near the end
+    if (percent < 70) {
+        percent += 4;
+    } else if (percent < 90) {
+        percent += 2;
+    } else if (percent < 98) {
+        percent += 1;
+    }
 
-progress.style.width=percent+"%";
+    progress.style.width = percent + "%";
+    value.textContent = percent + "%";
 
-value.innerHTML=percent+"%";
+}, 50);
 
-if(percent>=100){
+// Finish only when everything is loaded
+window.addEventListener("load", () => {
 
-clearInterval(loading);
+    clearInterval(loading);
 
-setTimeout(()=>{
+    percent = 100;
+    progress.style.width = "100%";
+    value.textContent = "100%";
 
-loader.style.opacity="0";
+    setTimeout(() => {
 
-loader.style.visibility="hidden";
+        loader.style.opacity = "0";
+        loader.style.visibility = "hidden";
 
-setTimeout(()=>{
+        setTimeout(() => {
 
-loader.remove();
+            loader.remove();
 
-},800);
+        }, 600);
 
-},400);
+    }, 300);
 
-}
-
-},18);
+});
 
 /*=========================================
 NAVBAR
@@ -66,25 +77,64 @@ const menuBtn=document.getElementById("menuBtn");
 const closeBtn=document.getElementById("closeMenu");
 const mobileMenu=document.getElementById("mobileMenu");
 
-menuBtn.onclick=()=>{
+menuBtn.addEventListener("click",()=>{
 
 mobileMenu.classList.add("active");
+document.body.style.overflow="hidden";
 
-};
+});
 
-closeBtn.onclick=()=>{
+closeBtn.addEventListener("click",()=>{
 
 mobileMenu.classList.remove("active");
+document.body.style.overflow="";
 
-};
+});
 
 document.querySelectorAll("#mobileMenu a").forEach(link=>{
 
-link.onclick=()=>{
+link.addEventListener("click",(e)=>{
+
+const href=link.getAttribute("href");
+
+// Internal section links
+if(href.startsWith("#")){
+
+e.preventDefault();
 
 mobileMenu.classList.remove("active");
+document.body.style.overflow="";
 
-};
+setTimeout(()=>{
+
+document.querySelector(href)?.scrollIntoView({
+
+behavior:"smooth",
+block:"start"
+
+});
+
+},250);
+
+}
+
+// External links (Google Form)
+else{
+
+e.preventDefault();
+
+mobileMenu.classList.remove("active");
+document.body.style.overflow="";
+
+setTimeout(()=>{
+
+window.location.assign(href);
+
+},200);
+
+}
+
+});
 
 });
 
@@ -336,26 +386,22 @@ ripple.remove();
 PARALLAX HERO
 =========================================*/
 
-window.addEventListener("scroll",()=>{
-
-const scroll=window.pageYOffset;
-
 const heroImage=document.querySelector(".hero-image");
-
 const glow=document.querySelector(".hero-glow");
 
-if(heroImage){
+window.addEventListener("scroll",()=>{
 
-heroImage.style.transform+=` translateY(${scroll*0.05}px)`;
+    if(window.innerWidth<=768) return;
 
-}
+    const scroll=window.pageYOffset;
 
-if(glow){
+    if(heroImage){
+        heroImage.style.transform=`translateY(${scroll*0.05}px)`;
+    }
 
-glow.style.transform=
-
-`translate(-50%,-50%) translateY(${scroll*0.08}px)`;
-
-}
+    if(glow){
+        glow.style.transform=
+        `translate(-50%,-50%) translateY(${scroll*0.08}px)`;
+    }
 
 });
