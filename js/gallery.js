@@ -1,273 +1,261 @@
-/*=========================================
-IGNITE V2 GALLERY
-=========================================*/
+    /*=========================================
+    IGNITE V2 GALLERY
+    =========================================*/
 
-const galleryItems=document.querySelectorAll(".gallery-item img");
-const lightbox=document.getElementById("lightbox");
-const lightboxImage=document.getElementById("lightboxImage");
+    const galleryItems=document.querySelectorAll(".gallery-item img");
+    const lightbox=document.getElementById("lightbox");
+    const lightboxImage=document.getElementById("lightboxImage");
 
-const prevBtn=document.getElementById("prevImage");
-const nextBtn=document.getElementById("nextImage");
-const closeLightboxBtn=document.getElementById("closeLightbox");
+    const prevBtn=document.getElementById("prevImage");
+    const nextBtn=document.getElementById("nextImage");
+    const closeLightboxBtn=document.getElementById("closeLightbox");
 
-const storyBar=document.querySelector(".story-bar");
+    const storyBar=document.querySelector(".story-bar");
 
-let currentIndex=0;
-let hideControlsTimer;
+    let currentIndex=0;
+    let hideControlsTimer;
 
-/*=========================================
-OPEN IMAGE
-=========================================*/
+    /*=========================================
+    OPEN IMAGE
+    =========================================*/
 
-function openImage(index){
+    function openImage(index){
 
-currentIndex=index;
+    currentIndex=index;
 
-lightboxImage.src=galleryItems[currentIndex].src;
+    lightboxImage.src=galleryItems[currentIndex].src;
 
-lightbox.classList.add("active");
+    lightbox.classList.add("active");
 
-document.body.style.overflow="hidden";
+    document.body.style.overflow="hidden";
 
-restartProgress();
+    restartProgress();
 
-showControls();
+    showControls();
 
-}
+    }
 
-/*=========================================
-CLOSE
-=========================================*/
+    /*=========================================
+    CLOSE
+    =========================================*/
 
-function closeImage(){
+    function closeImage(){
 
-lightbox.classList.remove("active");
+    lightbox.classList.remove("active");
 
-document.body.style.overflow="";
+    document.body.style.overflow="";
 
-stopProgress();
+    stopProgress();
 
-}
+    }
 
-/*=========================================
-NEXT
-=========================================*/
+    /*=========================================
+    NEXT
+    =========================================*/
 
-function nextImage(){
+    function nextImage(){
 
-currentIndex++;
+    currentIndex++;
 
-if(currentIndex>=galleryItems.length){
+    if(currentIndex>=galleryItems.length){
 
-currentIndex=0;
+    currentIndex=0;
 
-}
+    }
 
-lightboxImage.src=galleryItems[currentIndex].src;
+    lightboxImage.src=galleryItems[currentIndex].src;
 
-restartProgress();
+    restartProgress();
 
-}
+    }
 
-/*=========================================
-PREVIOUS
-=========================================*/
+    /*=========================================
+    PREVIOUS
+    =========================================*/
 
-function previousImage(){
+    function previousImage(){
 
-currentIndex--;
+    currentIndex--;
 
-if(currentIndex<0){
+    if(currentIndex<0){
 
-currentIndex=galleryItems.length-1;
+    currentIndex=galleryItems.length-1;
 
-}
+    }
 
-lightboxImage.src=galleryItems[currentIndex].src;
+    lightboxImage.src=galleryItems[currentIndex].src;
 
-restartProgress();
+    restartProgress();
 
-}
+    }
 
-/*=========================================
-EVENTS
-=========================================*/
+    /*=========================================
+    EVENTS
+    =========================================*/
 
-galleryItems.forEach((image,index)=>{
+    galleryItems.forEach((image,index)=>{
 
-image.addEventListener("click",()=>{
+    image.addEventListener("click",()=>{
 
-openImage(index);
+    openImage(index);
 
-});
+    });
 
-});
+    });
 
-nextBtn.onclick=nextImage;
+    nextBtn.onclick=nextImage;
 
-prevBtn.onclick=previousImage;
+    prevBtn.onclick=previousImage;
 
-closeLightboxBtn.onclick=closeImage;
+    closeLightboxBtn.onclick=closeImage;
 
-/*=========================================
-CLICK OUTSIDE
-=========================================*/
+    /*=========================================
+    CLICK OUTSIDE
+    =========================================*/
 
-lightbox.addEventListener("click",e=>{
+    lightbox.addEventListener("click",e=>{
 
-if(e.target===lightbox){
+    if(e.target===lightbox){
 
-closeImage();
+    closeImage();
 
-}
+    }
 
-});
+    });
 
-/*=========================================
-KEYBOARD
-=========================================*/
+    /*=========================================
+    KEYBOARD
+    =========================================*/
 
-document.addEventListener("keydown",e=>{
+    document.addEventListener("keydown",e=>{
 
-if(!lightbox.classList.contains("active")) return;
+    if(!lightbox.classList.contains("active")) return;
 
-if(e.key==="ArrowRight"){
+    if(e.key==="ArrowRight"){
 
-nextImage();
+    nextImage();
 
-}
+    }
 
-if(e.key==="ArrowLeft"){
+    if(e.key==="ArrowLeft"){
 
-previousImage();
+    previousImage();
 
-}
+    }
 
-if(e.key==="Escape"){
+    if(e.key==="Escape"){
 
-closeImage();
+    closeImage();
 
-}
+    }
 
-});
+    });
 
-/*=========================================
-SWIPE
-=========================================*/
+    /*=========================================
+    SWIPE
+    =========================================*/
 
-let touchStartX=0;
-let touchEndX=0;
+    let touchStartX=0;
+    let touchEndX=0;
 
-lightbox.addEventListener("touchstart",e=>{
+    lightbox.addEventListener("touchstart",e=>{
 
-touchStartX=e.changedTouches[0].clientX;
+    touchStartX=e.changedTouches[0].clientX;
 
-});
+    });
 
-lightbox.addEventListener("touchend",e=>{
+    lightbox.addEventListener("touchend",e=>{
 
-touchEndX=e.changedTouches[0].clientX;
+    touchEndX=e.changedTouches[0].clientX;
 
-let distance=touchStartX-touchEndX;
+    let distance=touchStartX-touchEndX;
 
-if(Math.abs(distance)<60) return;
+    if(Math.abs(distance)<60) return;
 
-if(distance>0){
+    if(distance>0){
 
-nextImage();
+    nextImage();
 
-}else{
+    }else{
 
-previousImage();
+    previousImage();
 
-}
+    }
 
-});
+    });
 
-/*=========================================
-AUTO HIDE CONTROLS
-=========================================*/
+    /*=========================================
+    AUTO HIDE CONTROLS
+    =========================================*/
 
-function showControls(){
+    function showControls(){
 
-clearTimeout(hideControlsTimer);
+    clearTimeout(hideControlsTimer);
 
-const controls=document.querySelectorAll(
+    const controls=document.querySelectorAll(
 
-"#prevImage,#nextImage,#closeLightbox,.story-header"
+    "#prevImage,#nextImage,#closeLightbox,.story-header"
 
-);
+    );
 
-controls.forEach(control=>{
+    controls.forEach(control=>{
 
-control.style.opacity="1";
+    control.style.opacity="1";
 
-});
+    });
 
-hideControlsTimer=setTimeout(()=>{
+    hideControlsTimer=setTimeout(()=>{
 
-controls.forEach(control=>{
+    controls.forEach(control=>{
 
-control.style.opacity=".15";
+    control.style.opacity=".15";
 
-});
+    });
 
-},2500);
+    },2500);
 
-}
+    }
 
-lightbox.addEventListener("mousemove",showControls);
+    lightbox.addEventListener("mousemove",showControls);
 
-lightbox.addEventListener("touchstart",showControls);
+    lightbox.addEventListener("touchstart",showControls);
 
-/*=========================================
-STORY BAR
-=========================================*/
+    /*=========================================
+    STORY BAR
+    =========================================*/
 
-function restartProgress(){
+    function restartProgress(){
 
-storyBar.style.animation="none";
+    storyBar.style.animation="none";
 
-storyBar.offsetHeight;
+    storyBar.offsetHeight;
 
-storyBar.style.animation="storyProgress 6s linear forwards";
+    storyBar.style.animation="storyProgress 6s linear forwards";
 
-}
+    }
 
-function stopProgress(){
+    function stopProgress(){
 
-storyBar.style.animation="none";
+    storyBar.style.animation="none";
 
-}
+    }
 
-/*=========================================
-DOUBLE TAP
-=========================================*/
+    /*=========================================
+    DOUBLE TAP
+    =========================================*/
 
-let lastTap=0;
+    let lastTap=0;
 
-lightboxImage.addEventListener("touchend",()=>{
+    lightboxImage.addEventListener("touchend",()=>{
 
-const now=Date.now();
+    const now=Date.now();
 
-if(now-lastTap<300){
+    if(now-lastTap<300){
 
-closeImage();
+    closeImage();
 
-}
+    }
 
-lastTap=now;
+    lastTap=now;
 
-});
-
-/*=========================================
-PRELOAD
-=========================================*/
-
-galleryItems.forEach(image=>{
-
-const preload=new Image();
-
-preload.src=image.src;
-
-});
+    });
