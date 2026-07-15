@@ -867,12 +867,6 @@ font-size:.82rem;
 color:#999;
 }
 
-.blur{
-filter:blur(7px);
-user-select:none;
-pointer-events:none;
-}
-
 /*======================================
 BUTTONS
 ======================================*/
@@ -1700,18 +1694,6 @@ color:white;
 
 /*============================*/
 
-.locked-price{
-
-filter:blur(10px);
-
-user-select:none;
-
-pointer-events:none;
-
-opacity:.8;
-
-}
-
 .price-status{
 
 font-size:.95rem;
@@ -1942,6 +1924,10 @@ FOOTER
 
 footer{
 
+position: relative;
+
+z-index: 100;
+
 margin-top:120px;
 
 padding:70px 20px 40px;
@@ -2010,6 +1996,10 @@ color:var(--gold);
 
 .footer-social{
 
+position: relative;
+    
+z-index: 101;
+
 display:flex;
 
 justify-content:center;
@@ -2021,6 +2011,10 @@ margin-bottom:35px;
 }
 
 .footer-social a{
+
+position: relative;
+
+z-index: 102;
 
 width:52px;
 
@@ -3641,13 +3635,5 @@ drop-shadow(0 0 28px rgba(255,0,110,.65))
 drop-shadow(0 0 55px rgba(247,183,49,.35));
 
 }
-
-}
-
-.mobile-register{
-
-position:relative;
-
-z-index:9999;
 
 }
